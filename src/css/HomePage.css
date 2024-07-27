@@ -1,0 +1,78 @@
+/* src/css/HomePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700;900&display=swap');
+
+.home-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0; /* Remove surrounding padding */
+  margin: 0; /* Remove surrounding margin */
+  background: linear-gradient(135deg, #4caf50, #ffffff); /* Green to white gradient */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  overflow: hidden; /* Hide any overflowing content */
+  box-sizing: border-box; /* Include padding and border in width and height calculations */
+  position: relative; /* Position relative for absolute positioning of child elements */
+}
+
+.hero-text {
+  max-width: 50%; /* Limit the width of the text */
+  text-align: left;
+  animation: slide-in-text 1s ease-out forwards; /* Slide-in animation for text */
+  position: relative; /* Ensure text is positioned correctly */
+  z-index: 1; /* Ensure text is on top of image */
+  padding: 20px; /* Optional: Add padding for better visual appearance */
+}
+
+.hero-text h1 {
+  font-size: 4.5em; /* Increased font size */
+  font-weight: 900; /* Extra bold text */
+  color: #333;
+  font-family: 'Dancing Script', cursive;
+  margin: 0;
+}
+
+.hero-text p {
+  font-size: 1.5em; /* Increase paragraph text size */
+  color: #666;
+}
+
+.hero-logo {
+  width: 80px; /* Adjust size as needed */
+  height: auto;
+  display: block;
+  margin-bottom: 20px; /* Space between logo and text */
+}
+
+.hero-image {
+  position: absolute;
+  right: 0; /* Align to the right edge */
+  bottom: 0;
+  animation: slide-in-image 1s ease-out forwards; /* Slide-in animation for image */
+  width: 50%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 0; /* Ensure image is behind text */
+}
+
+.hero-image img {
+  width: 100%; /* Ensure the image fits its container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@keyframes slide-in-text {
+  from {
+    transform: translateX(-100%); /* Start off-screen to the left */
+  }
+  to {
+    transform: translateX(0); /* End position */
+  }
+}
+
+@keyframes slide-in-image {
+  from {
+    right: -60%; /* Start off-screen to the right */
+  }
+  to {
+    right: 0; /* End position */
+  }
+}
