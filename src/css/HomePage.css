@@ -1,78 +1,84 @@
 /* src/css/HomePage.css */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700;900&display=swap');
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 .home-page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0; /* Remove surrounding padding */
-  margin: 0; /* Remove surrounding margin */
-  background: linear-gradient(135deg, #4caf50, #ffffff); /* Green to white gradient */
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
-  overflow: hidden; /* Hide any overflowing content */
-  box-sizing: border-box; /* Include padding and border in width and height calculations */
-  position: relative; /* Position relative for absolute positioning of child elements */
+  padding: 30px 50px; /* Adjust padding to move the content up */
+  background: linear-gradient(135deg, #a8e063, #56ab2f); /* Green gradient */
+  color: #000; /* Change text color to black */
+  animation: slideIn 1s ease-in-out;
 }
 
 .hero-text {
-  max-width: 50%; /* Limit the width of the text */
-  text-align: left;
-  animation: slide-in-text 1s ease-out forwards; /* Slide-in animation for text */
-  position: relative; /* Ensure text is positioned correctly */
-  z-index: 1; /* Ensure text is on top of image */
-  padding: 20px; /* Optional: Add padding for better visual appearance */
+  max-width: 600px;
+  animation: fadeIn 2s ease-in-out;
+  color: #000; /* Ensure text is black */
+  font-family:'Edu AU VIC WA NT Hand', sans-serif;
+  margin-top: -20px; 
+  margin-right:200px;
+  margin-left: 150px;
 }
 
 .hero-text h1 {
-  font-size: 4.5em; /* Increased font size */
-  font-weight: 900; /* Extra bold text */
-  color: #333;
-  font-family: 'Dancing Script', cursive;
-  margin: 0;
+  font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .hero-text p {
-  font-size: 1.5em; /* Increase paragraph text size */
-  color: #666;
+  font-size: 40px;
+  margin-bottom: 20px;
 }
 
-.hero-logo {
-  width: 80px; /* Adjust size as needed */
-  height: auto;
-  display: block;
-  margin-bottom: 20px; /* Space between logo and text */
+.hero-text .btn.shop-now-button {
+  background-color: #fff;
+  color: #56ab2f;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: inline-block;
+}
+
+.hero-text .btn.shop-now-button:hover {
+  background-color: #56ab2f;
+  color: #fff;
 }
 
 .hero-image {
-  position: absolute;
-  right: 0; /* Align to the right edge */
-  bottom: 0;
-  animation: slide-in-image 1s ease-out forwards; /* Slide-in animation for image */
-  width: 50%; /* Adjust width as needed */
-  height: auto; /* Maintain aspect ratio */
-  z-index: 0; /* Ensure image is behind text */
+  animation: fadeIn 3s ease-in-out;
+  margin-top: -30px; /* Move image up */
 }
 
 .hero-image img {
-  width: 100%; /* Ensure the image fits its container */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 60%;
+  height: auto;
 }
 
-@keyframes slide-in-text {
-  from {
-    transform: translateX(-100%); /* Start off-screen to the left */
-  }
-  to {
-    transform: translateX(0); /* End position */
-  }
-}
-
-@keyframes slide-in-image {
-  from {
-    right: -60%; /* Start off-screen to the right */
-  }
-  to {
-    right: 0; /* End position */
-  }
+.categories-section-container {
+  padding: 50px;
+  background-color: #f7f7f7;
 }
