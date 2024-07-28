@@ -1,8 +1,7 @@
-// src/pages/ProductDetailsPage.js
 import React, { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../css/ProductDetailsPage.css';
-import { CartContext } from '../context/CartContext'; // Import CartContext
+import { CartContext } from '../context/CartContext';
 import tomatoImage from '../assets/tomato.jpg';
 import strawImage from '../assets/Straw.jpg';
 import chilliPowderImage from '../assets/chillipowder.jpg';
@@ -18,7 +17,8 @@ const productsData = [
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const { addToCart } = useContext(CartContext); // Use CartContext
+  const { addToCart } = useContext(CartContext);
+  const navigate = useNavigate(); // Hook for navigation
   const product = productsData.find(p => p.id === parseInt(productId));
 
   const [quantity, setQuantity] = useState(1);
@@ -34,6 +34,12 @@ const ProductDetailsPage = () => {
   const handleAddToCart = () => {
     addToCart({ ...product, quantity });
   };
+
+  const handleBuyNow = () => {
+    addToCart({ ...product, quantity });
+    navigate('/checkout'); // Redirect to checkout page
+  };
+  
 
   return (
     <div className="product-details-section">
@@ -56,6 +62,7 @@ const ProductDetailsPage = () => {
           />
         </div>
         <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
+        <button className="buy-now-button" onClick={handleBuyNow}>Buy Now</button>
         <div className="related-products">
           <h3>Related Products</h3>
           <div className="related-products-list">

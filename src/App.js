@@ -11,6 +11,8 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import Footer from './components/Footer';
 import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderTrackingPage from './pages/OrderTrackingPage';
 import './css/styles.css';
 
 const App = () => {
@@ -27,6 +29,8 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<CartPage />} /> 
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-tracking" element={<OrderTrackingPage />} />
         </Routes>
         <Footer />
       </div>
