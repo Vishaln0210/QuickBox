@@ -1,4 +1,3 @@
-// src/components/Register.js
 import React, { useState } from 'react';
 import '../css/AuthForm.css';
 import registerImage from '../assets/Sign up-amico.png'; // Adjust path if needed
@@ -16,10 +15,16 @@ const Register = () => {
     if (password === confirmPassword) {
       try {
         const result = await register(email, password);
-        setMessage(result); // Handle success message
-        setMessageType('success');
+        if (result && result.data) {
+          setMessage('Registration successful');
+          setMessageType('success');
+        } else {
+          setMessage('Unexpected response format');
+          setMessageType('error');
+        }
       } catch (error) {
-        setMessage(error.message); // Handle error message
+        console.error('Registration error:', error);
+        setMessage('An error occurred during registration');
         setMessageType('error');
       }
     } else {
