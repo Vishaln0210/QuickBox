@@ -2,19 +2,29 @@
 import React, { useState } from 'react';
 import '../css/AuthForm.css';
 import registerImage from '../assets/Sign up-amico.png'; // Adjust path if needed
+import { register } from '../services/authService'; // Adjust path if needed
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
     if (password === confirmPassword) {
-      console.log('Registration Submitted', { email, password });
+      try {
+        const result = await register(email, password);
+        setMessage(result); // Handle success message
+        setMessageType('success');
+      } catch (error) {
+        setMessage(error.message); // Handle error message
+        setMessageType('error');
+      }
     } else {
-      console.log('Passwords do not match');
+      setMessage('Passwords do not match');
+      setMessageType('error');
     }
   };
 
@@ -51,6 +61,11 @@ const Register = () => {
             />
           </div>
           <button type="submit">Register</button>
+          {message && (
+            <p className={messageType === 'success' ? 'success-message' : 'error-message'}>
+              {message}
+            </p>
+          )}
         </form>
       </div>
       <div className="image-container">

@@ -6,11 +6,16 @@ import loginImage from '../assets/Login-bro.png'; // Adjust path if needed
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
     console.log('Login Submitted', { email, password });
+    // For demonstration purposes
+    setMessage('Login successful');
+    setMessageType('success');
   };
 
   return (
@@ -37,6 +42,11 @@ const Login = () => {
             />
           </div>
           <button type="submit">Login</button>
+          {message && (
+            <p className={messageType === 'success' ? 'success-message' : 'error-message'}>
+              {message}
+            </p>
+          )}
         </form>
       </div>
       <div className="image-container">
