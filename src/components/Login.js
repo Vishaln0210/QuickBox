@@ -7,15 +7,29 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login Submitted', { email, password });
-    // For demonstration purposes
-    setMessage('Login successful');
-    setMessageType('success');
+    try {
+      const response = await fetch('http://localhost:8080/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message);
+        // Perform any additional actions upon successful login
+      } else {
+        setMessage(data.message);
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setMessage('Login failed');
+    }
   };
 
   return (
@@ -42,11 +56,7 @@ const Login = () => {
             />
           </div>
           <button type="submit">Login</button>
-          {message && (
-            <p className={messageType === 'success' ? 'success-message' : 'error-message'}>
-              {message}
-            </p>
-          )}
+          {message && <p>{message}</p>}
         </form>
       </div>
       <div className="image-container">
