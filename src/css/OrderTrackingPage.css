@@ -1,0 +1,25 @@
+.order-tracking-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .order-tracking-page h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .map-container {
+    height: 500px;
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+  
+  .order-tracking-page p {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
