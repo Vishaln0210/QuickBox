@@ -12,12 +12,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
