@@ -2,11 +2,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
-import { CartContext } from '../context/CartContext'; // Import CartContext
+import { CartContext } from '../context/CartContext';
 import logo from '../assets/Box Delivery Service (1).png';
 
 const Navbar = () => {
-  const { cartItemCount } = useContext(CartContext); // Use CartContext
+  const { cart } = useContext(CartContext); // Use CartContext to get the cart
+  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0); // Calculate total items
 
   return (
     <nav className="navbar">
@@ -21,7 +22,7 @@ const Navbar = () => {
         <Link to="/register">Register</Link>
         <Link to="/profile">Profile</Link>
         <Link to="/cart" className="cart-link">
-          Cart ({cartItemCount})
+          Cart <span className="cart-counter">{cartItemCount}</span>
         </Link>
       </div>
     </nav>

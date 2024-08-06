@@ -1,56 +1,54 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../css/ProductDetailsPage.css';
 import { CartContext } from '../context/CartContext';
-import tomatoImage from '../assets/tomato.jpg';
-import strawImage from '../assets/Straw.jpg';
-import chilliPowderImage from '../assets/chillipowder.jpg';
-import nutellaImage from '../assets/nutella.jpg';
-
-// Sample product data
-const productsData = [
-  { id: 1, name: 'Tomato', price: 'Rs.0.70', image: tomatoImage, description: 'Fresh tomatoes', rating: 4.5, reviews: 120 },
-  { id: 2, name: 'Straw', price: 'Rs.1.20', image: strawImage, description: 'Fresh straw', rating: 4.0, reviews: 80 },
-  { id: 3, name: 'Chilli Powder', price: 'Rs.0.50', image: chilliPowderImage, description: 'Spicy chilli powder', rating: 4.8, reviews: 200 },
-  { id: 4, name: 'Nutella', price: 'Rs.3.00', image: nutellaImage, description: 'Delicious Nutella', rating: 4.9, reviews: 150 },
-];
+import axios from 'axios';
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate(); // Hook for navigation
-  const product = productsData.find(p => p.id === parseInt(productId));
-
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
+  useEffect(() => {
+    // Fetch product details from the backend
+    axios.get(`http://localhost:8080/api/products/${productId}`)
+      .then(response => {
+        setProduct(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+      });
+  }, [productId]);
+
   if (!product) {
-    return <div>Product not found</div>;
+    return <div>Loading...</div>;
   }
 
   const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
+    setQuantity(Number(e.target.value)); // Ensure the quantity is a number
   };
 
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity });
+    addToCart({ ...product, quantity: Number(quantity) });
   };
 
   const handleBuyNow = () => {
-    addToCart({ ...product, quantity });
+    addToCart({ ...product, quantity: Number(quantity) });
     navigate('/checkout'); // Redirect to checkout page
   };
-  
 
   return (
     <div className="product-details-section">
       <div className="product-image">
-        <img src={product.image} alt={product.name} />
+        <img src={product.image} alt={product.product_name} />
       </div>
       <div className="product-info">
-        <h2>{product.name}</h2>
+        <h2>{product.product_name}</h2>
         <p>{product.description}</p>
-        <p className="product-price">{product.price}</p>
-        <p className="product-rating">Rating: {product.rating} / 5 ({product.reviews} reviews)</p>
+        <p className="product-price">Rs.{product.price}</p>
+        <p className="product-rating">Rating: {product.rating} / 5</p>
         <div className="quantity-selector">
           <label htmlFor="quantity">Quantity:</label>
           <input
@@ -63,17 +61,6 @@ const ProductDetailsPage = () => {
         </div>
         <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
         <button className="buy-now-button" onClick={handleBuyNow}>Buy Now</button>
-        <div className="related-products">
-          <h3>Related Products</h3>
-          <div className="related-products-list">
-            {productsData.filter(p => p.id !== product.id).map((relatedProduct) => (
-              <div className="related-product-card" key={relatedProduct.id}>
-                <img src={relatedProduct.image} alt={relatedProduct.name} />
-                <p>{relatedProduct.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );

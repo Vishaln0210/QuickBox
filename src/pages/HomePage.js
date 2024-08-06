@@ -2,7 +2,8 @@ import React from 'react';
 import '../css/HomePage.css';
 import { Link } from 'react-router-dom';
 import heroImage from '../assets/Ecommerce checkout laptop-bro.png';
-import offerImage from '../assets/offer.png'; // Add an image for offers section
+import offerbanner2 from '../assets/offerbanner2.png'; // Add the banner image
+import fruitsImage from '../assets/fruits.png'; // Add the fruits image for the background
 import Categories from '../components/Categories';
 
 const HomePage = () => {
@@ -26,7 +27,7 @@ const HomePage = () => {
         <p>QuickBox is an innovative eCommerce platform where you can find everything you need in one place. We connect customers directly with sellers, offering a seamless shopping experience without intermediaries. Join us for an unparalleled shopping experience with exclusive benefits and subscription models for both sellers and customers.</p>
       </div>
       <div className="features-section">
-        <h2>Features</h2>
+     
         <div className="features-grid">
           <div className="feature-item">
             <h3>Fast Delivery</h3>
@@ -46,12 +47,9 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="offers-section">
-        <h2>Exclusive Offers</h2>
-        <div className="offer-image">
-          <img src={offerImage} alt="Exclusive Offers" />
-        </div>
-        <p>Check out our latest offers and discounts on a wide range of products. Don’t miss out on the best deals available only on QuickBox.</p>
+      {/* Replace the offers-section with the offer banner */}
+      <div className="offer-banner-section">
+        <img src={offerbanner2} alt="Special Offer" className="offer-banner" />
       </div>
       <div className="testimonials-section">
         <h2>Customer Testimonials</h2>
