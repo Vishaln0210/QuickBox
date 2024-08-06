@@ -1,3 +1,4 @@
+/* src/css/Navbar.css */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .navbar {
@@ -53,7 +54,7 @@
   font-size: 12px;
   position: absolute;
   top: -8px;
-  right: -10px; /* Adjusted to fit well with the font size */
+  right: -15px; /* Adjusted to fit well with the font size */
 }
 
 .navbar::after {
