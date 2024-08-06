@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../css/AuthForm.css';
 import registerImage from '../assets/Sign up-amico.png'; // Adjust path if needed
-import { register } from '../services/authService'; // Adjust path if needed
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -14,16 +13,24 @@ const Register = () => {
     e.preventDefault();
     if (password === confirmPassword) {
       try {
-        const result = await register(email, password);
-        if (result && result.data) {
-          setMessage('Registration successful');
+        const response = await fetch('http://localhost:8080/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setMessage(data.message);
           setMessageType('success');
         } else {
-          setMessage('Unexpected response format');
+          setMessage(data.message);
           setMessageType('error');
         }
       } catch (error) {
-        console.error('Registration error:', error);
+        console.error('Registration failed:', error);
         setMessage('An error occurred during registration');
         setMessageType('error');
       }

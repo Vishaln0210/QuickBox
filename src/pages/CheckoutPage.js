@@ -115,11 +115,10 @@ const CheckoutPage = () => {
             onChange={(e) => setPaymentMethod(e.target.value)}
           >
             <option value="credit-card">Credit Card</option>
-            <option value="paypal">Stripe</option>
             <option value="bank-transfer">Bank Transfer</option>
-            <option value="bank-transfer">Cash-on-Delivery</option>
-            <option value="bank-transfer">Cash-on-physical</option>
-            <option value="bank-transfer">UPI</option>
+            <option value="COD">Cash-on-Delivery</option>
+            <option value="COS">Cash-on-SHOP</option>
+            <option value="UPI">UPI</option>
           </select>
         </div>
         <button onClick={handlePlaceOrder}>Place Order</button>
