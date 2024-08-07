@@ -1,12 +1,15 @@
-// src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/AuthForm.css';
-import loginImage from '../assets/Login-bro.png'; // Adjust path if needed
+import loginImage from '../assets/Login-bro.png';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +25,8 @@ const Login = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage(data.message);
-        // Perform any additional actions upon successful login
+        login(email); // Use the login function from context
+        navigate('/'); // Redirect to home page after login
       } else {
         setMessage(data.message);
       }
