@@ -13,8 +13,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public User registerUser(User user) {
-        // In a real-world application, you should encrypt the password before saving it
-        // Here, we're storing it as plain text for simplicity
         return userRepository.save(user);
     }
 
