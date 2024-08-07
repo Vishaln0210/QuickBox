@@ -17,7 +17,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
