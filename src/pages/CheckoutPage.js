@@ -1,16 +1,22 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../css/CheckoutPage.css';
 import { CartContext } from '../context/CartContext';
 
+const API_URL = 'http://localhost:8080/api/orders';
+
 const CheckoutPage = () => {
-  const { cartItems = [], clearCart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
   const [shippingAddress, setShippingAddress] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [promoCode, setPromoCode] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const isValidPhoneNumber = (number) => /^[0-9]{10}$/.test(number);
 
   const handlePlaceOrder = () => {
     if (!shippingAddress || !contactNumber) {
@@ -18,22 +24,42 @@ const CheckoutPage = () => {
       return;
     }
 
-    // Add additional validation logic if necessary
+    if (!isValidPhoneNumber(contactNumber)) {
+      setError('Please enter a valid contact number.');
+      return;
+    }
 
-    // Proceed with order logic here
-    console.log('Order placed:', { shippingAddress, contactNumber, paymentMethod, cartItems, promoCode });
-    clearCart();
-    navigate('/order-tracking');
+    setLoading(true);
+
+    const order = {
+      shippingAddress,
+      contactNumber,
+      paymentMethod,
+      promoCode,
+      items: cart,
+      totalAmount: cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    };
+
+    axios.post(API_URL, order)
+      .then((response) => {
+        console.log('Order placed successfully:', response.data);
+        clearCart();
+        navigate('/order-tracking');
+      })
+      .catch((error) => {
+        console.error('Error placing order:', error);
+        setError('Failed to place order. Please try again.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  const totalPrice = Array.isArray(cartItems) ? 
-    cartItems.reduce((total, item) => total + item.price * item.quantity, 0) : 
-    0;
-
-  const shippingCost = 50; // Example fixed shipping cost
-  const taxRate = 0.18; // Example tax rate
+  const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const shippingCost = 50;
+  const taxRate = 0.18;
   const taxAmount = totalPrice * taxRate;
-  const discount = promoCode === 'SAVE10' ? 0.10 * totalPrice : 0; // Example discount
+  const discount = promoCode === 'SAVE10' ? 0.10 * totalPrice : 0;
   const finalTotal = totalPrice + shippingCost + taxAmount - discount;
 
   return (
@@ -41,11 +67,11 @@ const CheckoutPage = () => {
       <h2>Checkout</h2>
       <div className="checkout-summary">
         <h3>Order Summary</h3>
-        {cartItems.length === 0 ? (
+        {cart.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <>
-            {cartItems.map((item) => (
+            {cart.map((item) => (
               <div className="summary-item" key={item.id}>
                 <span>{item.name} (x{item.quantity})</span>
                 <span>{`Rs.${(item.price * item.quantity).toFixed(2)}`}</span>
@@ -98,16 +124,6 @@ const CheckoutPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="promoCode">Promo Code:</label>
-          <input
-            type="text"
-            id="promoCode"
-            value={promoCode}
-            onChange={(e) => setPromoCode(e.target.value)}
-            placeholder="Enter promo code (optional)"
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="paymentMethod">Payment Method:</label>
           <select
             id="paymentMethod"
@@ -115,16 +131,28 @@ const CheckoutPage = () => {
             onChange={(e) => setPaymentMethod(e.target.value)}
           >
             <option value="credit-card">Credit Card</option>
-            <option value="bank-transfer">Bank Transfer</option>
-            <option value="COD">Cash-on-Delivery</option>
-            <option value="COS">Cash-on-SHOP</option>
-            <option value="UPI">UPI</option>
+            <option value="debit-card">Debit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="cod">Cash on Delivery</option>
           </select>
         </div>
-        <button onClick={handlePlaceOrder}>Place Order</button>
-        <div className="customer-service">
-          <p>Need help? <a href="/contact-us">Contact our support team</a></p>
+        <div className="form-group">
+          <label htmlFor="promoCode">Promo Code:</label>
+          <input
+            type="text"
+            id="promoCode"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
+            placeholder="Enter promo code (if any)"
+          />
         </div>
+        <button
+          onClick={handlePlaceOrder}
+          className="place-order-button"
+          disabled={loading}
+        >
+          {loading ? 'Placing Order...' : 'Place Order'}
+        </button>
       </div>
     </div>
   );

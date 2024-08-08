@@ -14,7 +14,9 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
 import './css/styles.css';
-
+import OrderList from './components/OrderList';
+import OrderDetail from './components/OrderDetail';
+import WalletPage from '../src/pages/WalletPage';
 const App = () => {
   return (
     <Router>
@@ -31,6 +33,10 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-tracking" element={<OrderTrackingPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/orders" element={<OrderList />} />
+        <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/orders/:orderId" element={<OrderDetail />} />
         </Routes>
         <Footer />
       </div>

@@ -1,5 +1,4 @@
-// src/components/Navbar.js
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
 import { CartContext } from '../context/CartContext';
@@ -7,12 +6,24 @@ import logo from '../assets/Box Delivery Service (1).png';
 import { IoHomeSharp } from "react-icons/io5";
 import { BiSolidCategory } from "react-icons/bi";
 import { RiLoginCircleFill } from "react-icons/ri";
-import { FaShoppingCart } from "react-icons/fa";
-import { SiSimplelogin } from "react-icons/si";
+import { FaShoppingCart, FaWallet, FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
-  const { cart } = useContext(CartContext); // Use CartContext to get the cart
-  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0); // Calculate total items
+  const { cart } = useContext(CartContext);
+  const [userEmail, setUserEmail] = useState(null);
+  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userEmail');
+    setUserEmail(null);
+  };
 
   return (
     <nav className="navbar">
@@ -20,29 +31,45 @@ const Navbar = () => {
         <img src={logo} alt="QuickBox" className="navbar-logo" />
         QuickBox
       </Link>
-      <div className="navbar-links">
-        <div className='home-icon'>
-        <IoHomeSharp />
+      <div className="nav-items">
+        <div className="nav-item">
+          <IoHomeSharp />
+          <Link to="/">Home</Link>
         </div>
-        <Link to="/">Home</Link>
-        <div className='category-icon'>
-       <BiSolidCategory/>
+        <div className="nav-item">
+          <BiSolidCategory />
+          <Link to="/categories">Categories</Link>
         </div>
-        <Link to="/categories">Categories</Link>
-        <div className='Login-icon'>
-        <RiLoginCircleFill />
+        {userEmail ? (
+          <>
+            <div className="nav-item">
+              <FaWallet />
+              <Link to="/wallet">Wallet</Link>
+            </div>
+            <div className="nav-item">
+              <FaUserCircle />
+              <span>{userEmail.split('@')[0]}</span>
+            </div>
+            <button onClick={handleLogout} className="logout-button">Logout</button>
+          </>
+        ) : (
+          <>
+            <div className="nav-item">
+              <RiLoginCircleFill />
+              <Link to="/login">Login</Link>
+            </div>
+            <div className="nav-item">
+              <RiLoginCircleFill />
+              <Link to="/register">Register</Link>
+            </div>
+          </>
+        )}
+        <div className="nav-item cart-icon">
+          <FaShoppingCart />
+          <Link to="/cart" className="cart-link">
+            Cart <span className="cart-counter">{cartItemCount}</span>
+          </Link>
         </div>
-        <Link to="/login">Login</Link>
-        <div className='register-icon'>
-        <SiSimplelogin />
-        </div>
-        <Link to="/register">Register</Link>
-        <div className='category-icon'>
-       <FaShoppingCart/>
-        </div>
-        <Link to="/cart" className="cart-link">
-          Cart <span className="cart-counter">{cartItemCount}</span>
-        </Link>
       </div>
     </nav>
   );
