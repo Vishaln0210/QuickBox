@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/ProductPage.css';
 import axios from 'axios';
+import '../css/ProductPage.css'; // Ensure this CSS file is updated with the styles below
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -32,10 +32,14 @@ const ProductsPage = () => {
       <div className="products-grid">
         {products.map((product) => (
           <div className="product-card" key={product.id}>
-            <Link to={`/product/${product.id}`}>
-              <img src={product.image} alt={product.product_name} />
-              <h3>{product.product_name}</h3>
-              <p>{`Rs.${product.price}`}</p>
+            <Link to={`/product/${product.id}`} className="product-link">
+              <div className="product-photo">
+                <img src={product.image} alt={product.product_name} />
+              </div>
+              <div className="product-info">
+                <h3>{product.product_name}</h3>
+                <p>{`Rs.${product.price}`}</p>
+              </div>
             </Link>
             <button className="add-to-cart-button">Add to Cart</button>
           </div>

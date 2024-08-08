@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
-import { CartContext } from '../context/CartContext'; // Import CartContext
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { CartContext } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 import '../css/CartPage.css';
 
 const CartPage = () => {
-  const { cart, removeFromCart, updateCartItemQuantity } = useContext(CartContext); // Use CartContext
-  const navigate = useNavigate(); // Hook for navigation
+  const { cart, removeFromCart, updateCartItemQuantity } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (productId, quantity) => {
     updateCartItemQuantity(productId, parseInt(quantity));
   };
 
   const handleCheckout = () => {
-    navigate('/checkout'); // Redirect to checkout page
+    navigate('/checkout');
   };
 
   return (

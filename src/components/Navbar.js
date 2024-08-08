@@ -62,7 +62,6 @@ const Navbar = () => {
               <RiLoginCircleFill />
               <Link to="/register">Register</Link>
             </div>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
           </>
         )}
         <div className="nav-item cart-icon">
@@ -70,7 +69,6 @@ const Navbar = () => {
           <Link to="/cart" className="cart-link">
             Cart <span className="cart-counter">{cartItemCount}</span>
           </Link>
-          
         </div>
       </div>
     </nav>
