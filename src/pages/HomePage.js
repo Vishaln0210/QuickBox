@@ -2,9 +2,9 @@ import React from 'react';
 import '../css/HomePage.css';
 import { Link } from 'react-router-dom';
 import heroImage from '../assets/Ecommerce checkout laptop-bro.png';
-import offerbanner2 from '../assets/offerbanner2.png'; // Add the banner image
-import fruitsImage from '../assets/fruits.png'; // Add the fruits image for the background
 import Categories from '../components/Categories';
+import offerbannerfin from '../assets/offerbannerfin.png';
+import QuickBox from '../assets/QuickBox.png'
 
 const HomePage = () => {
   return (
@@ -49,24 +49,7 @@ const HomePage = () => {
       </div>
       {/* Replace the offers-section with the offer banner */}
       <div className="offer-banner-section">
-        <img src={offerbanner2} alt="Special Offer" className="offer-banner" />
-      </div>
-      <div className="testimonials-section">
-        <h2>Customer Testimonials</h2>
-        <div className="testimonial">
-          <p>"QuickBox is the best online shopping platform I've used. The delivery is fast and the products are of great quality!"</p>
-          <p>- John Doe</p>
-        </div>
-        <div className="testimonial">
-          <p>"Excellent customer service and a wide range of products. I highly recommend QuickBox!"</p>
-          <p>- Jane Smith</p>
-        </div>
-      </div>
-      <div className="contact-us-section">
-        <h2>Contact Us</h2>
-        <p>If you have any questions or need assistance, feel free to reach out to us at:</p>
-        <p>Email: support@quickbox.com</p>
-        <p>Phone: (123) 456-7890</p>
+        <img src={QuickBox} alt="Special Offer" className="offer-banner" />
       </div>
     </div>
   );

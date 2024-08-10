@@ -266,11 +266,9 @@
   background-color: #fff;
 }
 
-/* Add this to the existing HomePage.css file */
-
 .offer-banner-section {
-  width: 100%;
-  margin: 0;
+  width: 90%;
+  margin: 70px;
   padding: 0;
 }
 
