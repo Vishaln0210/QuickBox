@@ -34,10 +34,10 @@ const ProductsPage = () => {
           <div className="product-card" key={product.id}>
             <Link to={`/product/${product.id}`} className="product-link">
               <div className="product-photo">
-                <img src={product.image} alt={product.product_name} />
+                <img src={product.image} alt={product.productName} />
               </div>
               <div className="product-info">
-                <h3>{product.product_name}</h3>
+                <h3>{product.productName}</h3> {/* Displaying the product name */}
                 <p>{`Rs.${product.price}`}</p>
               </div>
             </Link>
