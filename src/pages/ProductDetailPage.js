@@ -53,10 +53,10 @@ const ProductDetailsPage = () => {
     <div className="product-details-page">
       <div className="product-details-section">
         <div className="product-image-section">
-          <img src={product.image} alt={product.product_name} className="product-image" />
+          <img src={product.image} alt={product.productName} className="product-image" />
         </div>
         <div className="product-info-section">
-          <h2 className="product-name">{product.product_name}</h2>
+          <h2 className="product-name">{product.productName}</h2>
           <p className="product-description">{product.description}</p>
           <div className="product-details">
             <div className="product-detail-item"><strong>Weight:</strong> {product.weight || '2kg'}</div>
@@ -88,8 +88,8 @@ const ProductDetailsPage = () => {
           {relatedProducts.length > 0 ? (
             relatedProducts.map((relatedProduct) => (
               <div className="related-product-card" key={relatedProduct.id}>
-                <img src={relatedProduct.image} alt={relatedProduct.product_name} className="related-product-image" />
-                <p className="related-product-name">{relatedProduct.product_name}</p>
+                <img src={relatedProduct.image} alt={relatedProduct.productName} className="related-product-image" />
+                <p className="related-product-name">{relatedProduct.productName}</p>
                 <p className="related-product-price">Rs.{relatedProduct.price}</p>
               </div>
             ))
