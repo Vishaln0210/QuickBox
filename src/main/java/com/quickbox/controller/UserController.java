@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class UserController {
 
     @Autowired
     private UserService userService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
@@ -40,5 +42,23 @@ public class UserController {
             response.put("message", "Invalid email or password");
             return ResponseEntity.status(401).body(response);
         }
+    }
+
+    // New GET API to retrieve user details
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable String id) {
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User not found");
+            return ResponseEntity.status(404).body(response);
+        }
+
+    }
+    @GetMapping("/users")
+    public List<User> getAllUsers(){
+        return userService.findAllUsers();
     }
 }
